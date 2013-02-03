@@ -384,6 +384,8 @@ static void cpufreq_lulzactive_timer(unsigned long data)
 			index += pump_up_step;
 			if (index < 0)
 				index = 0;
+			if (index >= pcpu->freq_table_size)
+				index = pcpu->freq_table_size - 1;
 			new_freq = pcpu->freq_table[index].frequency;
 		}
 		else {
@@ -413,10 +415,10 @@ static void cpufreq_lulzactive_timer(unsigned long data)
 			}
 			// apply pump_down_step by tegrak
 			index -= pump_down_step;
-			if (index >= pcpu->freq_table_size) {
+			if (index < 0)
+				index = 0;
+			if (index >= pcpu->freq_table_size)
 				index = pcpu->freq_table_size - 1;
-			}
-            
 			new_freq = (pcpu->policy->cur > pcpu->policy->min) ? 
             (pcpu->freq_table[index].frequency) :
             (pcpu->policy->min);
