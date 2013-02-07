@@ -90,8 +90,8 @@ config IOSCHED_VR
 	tristate "V(R) I/O scheduler"
 	default n
  	---help---
-		Requests are chosen according to SSTF with a penalty of rev_penalty
-		for switching head direction.
+	  Requests are chosen according to SSTF with a penalty of rev_penalty
+	  for switching head direction.
 
 choice
 	prompt "Default I/O scheduler"
