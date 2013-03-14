@@ -6384,18 +6384,17 @@ out:
 
 static void __init msm7x30_init_mmc(void)
 {
-#if 1
-		if (msm_wlan_gpio_init ())
-			printk (KERN_ERR "%s: Unable to initialize wlan GPIO's\n", __func__);
-		else
-			printk (KERN_ERR "%s: Initialized wlan GPIO's\n", __func__);
-#endif
+	if (msm_wlan_gpio_init ())
+		pr_err("%s: Unable to initialize wlan GPIO's\n", __func__);
+	else
+		pr_info("%s: Initialized wlan GPIO's\n", __func__);
 
 #ifdef CONFIG_MMC_MSM_SDC1_SUPPORT
+	pr_debug("%s: Wlan ocr_mask = %d\n", __func__, msm7x30_sdc1_data.ocr_mask);
+
 	if (mmc_regulator_init(1, "s3", 1800000))
 		goto out1;
-	msm7x30_sdc1_data.swfi_latency = msm7x30_power_collapse_latency(
-		MSM_PM_SLEEP_MODE_RAMP_DOWN_AND_WAIT_FOR_INTERRUPT);
+	msm7x30_sdc1_data.swfi_latency = msm7x30_power_collapse_latency(MSM_PM_SLEEP_MODE_RAMP_DOWN_AND_WAIT_FOR_INTERRUPT);
 
 	if (machine_is_msm7x30_fluid()) {
 		msm7x30_sdc1_data.ocr_mask =  MMC_VDD_27_28 | MMC_VDD_28_29;
