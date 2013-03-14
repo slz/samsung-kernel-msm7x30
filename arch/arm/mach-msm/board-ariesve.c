@@ -6316,6 +6316,8 @@ out:
 static void __init msm7x30_init_mmc(void)
 {
 #ifdef CONFIG_MMC_MSM_SDC1_SUPPORT
+	pr_debug("%s: Wlan ocr_mask = %d\n", __func__, msm7x30_sdc1_data.ocr_mask);
+
 	if (mmc_regulator_init(1, "s3", 1800000))
 		goto out1;
 	msm7x30_sdc1_data.swfi_latency = msm7x30_power_collapse_latency(
