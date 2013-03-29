@@ -603,8 +603,6 @@ static struct acpuclk_data acpuclk_7x30_data = {
 
 static int __init acpuclk_7x30_init(struct acpuclk_soc_data *soc_data)
 {
-	struct clkctl_acpu_speed *s;
-
 	pr_info("%s()\n", __func__);
 
 	mutex_init(&drv_state.lock);
@@ -615,10 +613,7 @@ static int __init acpuclk_7x30_init(struct acpuclk_soc_data *soc_data)
 	setup_cpufreq_table();
 	acpuclk_register(&acpuclk_7x30_data);
 
-	for (s = acpu_freq_tbl; s->acpu_clk_khz != 1209600; s++)
-		;
-	acpuclk_set_rate(0, s->acpu_clk_khz, SETRATE_CPUFREQ);
-	pr_info("ACPU init done, clock rate now : %d\n", drv_state.current_speed->acpu_clk_khz);
+	pr_info("ACPU init done, clock rate is: %d KHz\n", drv_state.current_speed->acpu_clk_khz);
 
 	return 0;
 }
