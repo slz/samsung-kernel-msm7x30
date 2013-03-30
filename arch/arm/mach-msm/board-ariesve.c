@@ -144,16 +144,16 @@ struct device *switch_dev;
 EXPORT_SYMBOL(switch_dev);
 
 #ifdef CONFIG_MSM_MEMORY_HIGH               // 360 MB of free RAM
-#define MSM_PMEM_SF_SIZE          0x0F00000 //    15.728.640 Bytes =  15 MB
-#define MSM_PMEM_ADSP_SIZE        0x2A00000 //    44.040.192 Bytes =  42 MB
-#define MSM_PMEM_AUDIO_SIZE       0x0200000 //     2.097.152 Bytes =   2 MB
-#elif defined(CONFIG_MSM_MEMORY_VERY_HIGH)  // 370 MB of free RAM
-#define MSM_PMEM_SF_SIZE          0x0600000 //     6.291.456 Bytes =   6 MB
-#define MSM_PMEM_ADSP_SIZE        0x2A00000 //    44.040.192 Bytes =  42 MB
+#define MSM_PMEM_SF_SIZE          0x1200000 //    18.874.368 Bytes =  18 MB
+#define MSM_PMEM_ADSP_SIZE        0x2800000 //    41.943.040 Bytes =  40 MB
 #define MSM_PMEM_AUDIO_SIZE       0x0100000 //     1.048.576 Bytes =   1 MB
-#else                                       // 347 MB of free RAM
+#elif defined(CONFIG_MSM_MEMORY_VERY_HIGH)  // 370 MB of free RAM
+#define MSM_PMEM_SF_SIZE          0x0800000 //     8.388.608 Bytes =   8 MB
+#define MSM_PMEM_ADSP_SIZE        0x2800000 //    41.943.040 Bytes =  40 MB
+#define MSM_PMEM_AUDIO_SIZE       0x0100000 //     1.048.576 Bytes =   1 MB
+#else                                       // 350 MB of free RAM
 #define MSM_PMEM_SF_SIZE          0x1A00000 //    27.262.976 Bytes =  26 MB
-#define MSM_PMEM_ADSP_SIZE        0x2D00000 //    47.185.920 Bytes =  45 MB
+#define MSM_PMEM_ADSP_SIZE        0x2900000 //    42.991.616 Bytes =  41 MB
 #define MSM_PMEM_AUDIO_SIZE       0x0200000 //     2.097.152 Bytes =   2 MB
 #endif
 
@@ -164,6 +164,13 @@ EXPORT_SYMBOL(switch_dev);
 #define MSM_FB_PRIM_BUF_SIZE	(800 * 480 * 4 * 3) /* 4bpp * 3 Pages */
 #else
 #define MSM_FB_PRIM_BUF_SIZE	(800 * 480 * 4 * 2) /* 4bpp * 2 Pages */
+#endif
+
+#ifdef CONFIG_FB_MSM_OVERLAY0_WRITEBACK
+/* width x height x 3 bpp x 2 frame buffer */
+#define MSM_FB_OVERLAY0_WRITEBACK_SIZE roundup((800 * 480 * 3 * 2), 4096)
+#else
+#define MSM_FB_OVERLAY0_WRITEBACK_SIZE	0
 #endif
 
 #define MSM_FB_SIZE roundup(MSM_FB_PRIM_BUF_SIZE, 4096)
