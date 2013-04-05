@@ -1434,7 +1434,7 @@ CONFIG_DIAG_OVER_USB=y
 #
 # SDIO support for DIAG
 #
-CONFIG_DIAG_SDIO_PIPE=y
+# CONFIG_DIAG_SDIO_PIPE is not set
 
 #
 # HSIC support for DIAG
