@@ -1458,6 +1458,11 @@ config MSM_MEMORY_VERY_HIGH
 	help
 	  Enabling this option allow to have 370 MB of free ram.
 
+config MSM_MEMORY_EXTRA_HIGH
+	bool "Enable 390 MB of free RAM"
+	help
+	  Enabling this option allow to have 390 MB of free ram.
+
 endchoice
 
 config MSM_CPU_AVS

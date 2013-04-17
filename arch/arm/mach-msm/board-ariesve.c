@@ -151,6 +151,10 @@ EXPORT_SYMBOL(switch_dev);
 #define MSM_PMEM_SF_SIZE          0x0800000 //     8.388.608 Bytes =   8 MB
 #define MSM_PMEM_ADSP_SIZE        0x2800000 //    41.943.040 Bytes =  40 MB
 #define MSM_PMEM_AUDIO_SIZE       0x0100000 //     1.048.576 Bytes =   1 MB
+#elif defined(CONFIG_MSM_MEMORY_EXTRA_HIGH) // 390 MB of free RAM
+#define MSM_PMEM_SF_SIZE          0x0800000 //     8.388.608 Bytes =   8 MB
+#define MSM_PMEM_ADSP_SIZE        0x1400000 //    20.971.520 Bytes =  20 MB
+#define MSM_PMEM_AUDIO_SIZE       0x0100000 //     1.048.576 Bytes =   1 MB
 #else                                       // 350 MB of free RAM
 #define MSM_PMEM_SF_SIZE          0x1A00000 //    27.262.976 Bytes =  26 MB
 #define MSM_PMEM_ADSP_SIZE        0x2900000 //    42.991.616 Bytes =  41 MB
