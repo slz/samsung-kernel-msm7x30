@@ -149,16 +149,16 @@ EXPORT_SYMBOL(sec_class);
 struct device *switch_dev;
 EXPORT_SYMBOL(switch_dev);
 
-#ifdef CONFIG_MSM_MEMORY_HIGH               // 356 MB of free RAM
+#ifdef CONFIG_MSM_MEMORY_HIGH               // 388 MB of free RAM
 #define MSM_PMEM_SF_SIZE          0x1200000 //    18.874.368 Bytes =  18 MB
 #define MSM_PMEM_ADSP_SIZE        0x1200000 //    18.874.368 Bytes =  18 MB
-#elif defined(CONFIG_MSM_MEMORY_VERY_HIGH)  // 366 MB of free RAM
+#elif defined(CONFIG_MSM_MEMORY_VERY_HIGH)  // 398 MB of free RAM
 #define MSM_PMEM_SF_SIZE          0x0800000 //     8.388.608 Bytes =   8 MB
 #define MSM_PMEM_ADSP_SIZE        0x1200000 //    18.874.368 Bytes =  18 MB
-#elif defined(CONFIG_MSM_MEMORY_EXTRA_HIGH) // 374 MB of free RAM
+#elif defined(CONFIG_MSM_MEMORY_EXTRA_HIGH) // 406 MB of free RAM
 #define MSM_PMEM_SF_SIZE          0x0800000 //     8.388.608 Bytes =   8 MB
 #define MSM_PMEM_ADSP_SIZE        0x0A00000 //    10.485.760 Bytes =  10 MB
-#else                                       // 348 MB of free RAM
+#else                                       // 380 MB of free RAM
 #define MSM_PMEM_SF_SIZE          0x1A00000 //    27.262.976 Bytes =  26 MB
 #define MSM_PMEM_ADSP_SIZE        0x1200000 //    18.874.368 Bytes =  18 MB
 #endif
