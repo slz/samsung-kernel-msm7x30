@@ -1874,7 +1874,7 @@ void msm_snddev_poweramp_off_tty(void)
 }
 
 static struct regulator_bulk_data snddev_regs[] = {
-	{ .supply = "gp4", .min_uV = 1800000, .max_uV = 2600000 },
+	{ .supply = "gp4", .min_uV = 1700000, .max_uV = 2600000 },
 	{ .supply = "ncp", .min_uV = 1800000, .max_uV = 1800000 },
 };
 
@@ -3526,7 +3526,7 @@ static struct msm_gpio optnav_config_data[] = {
 
 static struct regulator_bulk_data optnav_regulators[] = {
 	{ .supply = "gp7", .min_uV = 1800000, .max_uV = 1800000 },
-	{ .supply = "gp4", .min_uV = 1800000, .max_uV = 2600000 },
+	{ .supply = "gp4", .min_uV = 1700000, .max_uV = 2600000 },
 	{ .supply = "gp9", .min_uV = 1800000, .max_uV = 1800000 },
 	{ .supply = "usb", .min_uV = 3300000, .max_uV = 3300000 },
 };
@@ -4254,8 +4254,8 @@ static struct regulator *mddi_lcd;
 static int display_common_init(void)
 {
 	struct regulator_bulk_data regs[2] = {
-		{ .supply = "ldo17", .min_uV = 1800000, .max_uV = 1800000},
-		{ .supply = "ldo15", .min_uV = 3000000, .max_uV = 3000000},
+		{ .supply = "ldo17", .min_uV = 1700000, .max_uV = 1700000},
+		{ .supply = "ldo15", .min_uV = 2800000, .max_uV = 2800000},
 	};
 
 	int rc = 0;
@@ -5792,7 +5792,7 @@ static int mbp_init_regs(struct device *dev)
 {
 	struct regulator_bulk_data regs[] = {
 		/* Analog and I/O regs */
-		{ .supply = "gp4",  .min_uV = 1800000, .max_uV = 2600000 },
+		{ .supply = "gp4",  .min_uV = 1700000, .max_uV = 2600000 },
 		{ .supply = "s3",   .min_uV = 1800000, .max_uV = 1800000 },
 		/* RF regs */
 		{ .supply = "s2",   .min_uV = 1300000, .max_uV = 1300000 },
@@ -6254,7 +6254,7 @@ static int msm_sdc1_lvlshft_enable(void)
 		goto out;
 	}
 
-	rc = regulator_set_voltage(ldo5, 2850000, 2850000);
+	rc = regulator_set_voltage(ldo5, 2100000, 2100000);
 	if (rc) {
 		pr_err("%s: could not set ldo5 voltage: %d\n", __func__, rc);
 		goto ldo5_free;
