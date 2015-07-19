@@ -40,7 +40,7 @@
 #endif
 
 #define BMA_ACC_KERNEL_VERSION                                                        "3.0.401"
-#define BMA_ACC_KERNEL_NAME                                                   "YamahaBMA222"
+#define BMA_ACC_KERNEL_NAME                                                   "accelerometer"
 /* [HSS] Additional Define */
 #define ACC_BMA150_I2C_SLAVE_ADDRESS                                          0x38
 #define ACC_BMA222_I2C_SLAVE_ADDRESS                                          0x08
