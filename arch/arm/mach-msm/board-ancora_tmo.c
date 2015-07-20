@@ -4537,8 +4537,8 @@ static struct regulator *mddi_lcd;
 static int display_common_init(void)
 {
 	struct regulator_bulk_data regs[2] = {
-		{ .supply = "ldo17", .min_uV = 1700000, .max_uV = 1700000},
-		{ .supply = "ldo15", .min_uV = 2800000, .max_uV = 2800000},
+		{ .supply = "ldo17", .min_uV = 1800000, .max_uV = 1800000},
+		{ .supply = "ldo15", .min_uV = 3000000, .max_uV = 3000000},
 	};
 
 	int rc = 0;
@@ -6399,7 +6399,7 @@ extern unsigned int wlan_status();
 	defined(CONFIG_CSDIO_DEVICE_ID) && \
 	(CONFIG_CSDIO_VENDOR_ID == 0x70 && CONFIG_CSDIO_DEVICE_ID == 0x1117)
 static struct mmc_platform_data msm7x30_sdc1_data = {
-	.ocr_mask	= MMC_VDD_165_195 | MMC_VDD_20_21 | MMC_VDD_21_22,
+	.ocr_mask	= MMC_VDD_165_195 | MMC_VDD_27_28 | MMC_VDD_28_29,
 	.translate_vdd	= msm_sdcc_setup_power_mbp,
 	.mmc_bus_width  = MMC_CAP_4_BIT_DATA,
 	.status	        = mbp_status,
@@ -6487,7 +6487,7 @@ static int msm_sdc1_lvlshft_enable(void)
 		goto out;
 	}
 
-	rc = regulator_set_voltage(ldo5, 2100000, 2100000);
+	rc = regulator_set_voltage(ldo5, 2850000, 2850000);
 	if (rc) {
 		pr_err("%s: could not set ldo5 voltage: %d\n", __func__, rc);
 		goto ldo5_free;

@@ -622,7 +622,7 @@ static int __devinit acpuclk_7x30_probe(struct platform_device *pdev)
 	setup_cpufreq_table();
 	acpuclk_register(&acpuclk_7x30_data);
 
-	pr_info("ACPU init done, clock rate is: %d KHz\n", drv_state.current_speed->acpu_clk_khz);
+	//pr_info("ACPU init done, clock rate is: %d KHz\n", drv_state.current_speed->acpu_clk_khz);
 
 	return 0;
 }
