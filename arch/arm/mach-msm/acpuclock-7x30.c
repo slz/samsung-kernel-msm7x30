@@ -189,10 +189,10 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 1, 1516800, PLL_2, 3, 0, UINT_MAX, 1225, VDD_RAW(1225), &pll2_tbl[6]},
 	{ 1, 1555200, PLL_2, 3, 0, UINT_MAX, 1225, VDD_RAW(1225), &pll2_tbl[8]},
 	{ 1, 1612800, PLL_2, 3, 0, UINT_MAX, 1250, VDD_RAW(1250), &pll2_tbl[9]},
-	{ 1, 1651200, PLL_2, 3, 0, UINT_MAX, 1250, VDD_RAW(1250), &pll2_tbl[10]},
-	{ 1, 1708800, PLL_2, 3, 0, UINT_MAX, 1275, VDD_RAW(1275), &pll2_tbl[11]},
-	{ 1, 1766400, PLL_2, 3, 0, UINT_MAX, 1300, VDD_RAW(1300), &pll2_tbl[12]},
-	{ 1, 1804800, PLL_2, 3, 0, UINT_MAX, 1325, VDD_RAW(1325), &pll2_tbl[13]},
+	{ 1, 1651200, PLL_2, 3, 0, UINT_MAX, 1275, VDD_RAW(1275), &pll2_tbl[10]},
+	{ 1, 1708800, PLL_2, 3, 0, UINT_MAX, 1300, VDD_RAW(1300), &pll2_tbl[11]},
+	{ 1, 1766400, PLL_2, 3, 0, UINT_MAX, 1325, VDD_RAW(1325), &pll2_tbl[12]},
+	{ 1, 1804800, PLL_2, 3, 0, UINT_MAX, 1350, VDD_RAW(1350), &pll2_tbl[13]},
 	{ 1, 1824000, PLL_2, 3, 0, UINT_MAX, 1350, VDD_RAW(1350), &pll2_tbl[14]},
 #endif
 	{ 0 }
@@ -684,5 +684,65 @@ void acpuclk_set_vdd(unsigned int khz, int vdd)
 		}
 	}
 	mutex_unlock(&drv_state.lock);
+}
+
+/*
+Used by some voltage control programs like SetCPU and Voltage Control.
+
+Both of the following functions are called from drivers/cpufreq/cpufreq.c
+*/
+ssize_t acpuclk_get_UV_mV_table_str(char *buf)
+{
+	int i, len = 0;
+	if (buf)
+	{
+		mutex_lock(&drv_state.lock);
+		for (i = ARRAY_SIZE(acpu_freq_tbl) - 2; i >= 0; i--)
+		{		
+			if (acpu_freq_tbl[i].use_for_scaling &&
+				acpu_freq_tbl[i].acpu_clk_khz &&
+				acpu_freq_tbl[i].acpu_clk_khz >= cpufreq_tbl[0].frequency)
+			{
+				len += sprintf(buf + len, "%lumhz: %lu mV\n", acpu_freq_tbl[i].acpu_clk_khz / 1000, acpu_freq_tbl[i].vdd_mv);
+			}
+		}
+		mutex_unlock(&drv_state.lock);
+	}
+	return len;
+}
+
+ssize_t acpuclk_store_UV_mV_table(const char *buf, size_t count)
+{
+	unsigned int new_vdd;
+	int i = 0;
+	int ret;
+	char size_cur[16];
+
+	mutex_lock(&drv_state.lock);
+	i = ARRAY_SIZE(acpu_freq_tbl) - 1;
+
+	for(i--; i >= 0; i--) {
+		if(acpu_freq_tbl[i].use_for_scaling &&
+				acpu_freq_tbl[i].acpu_clk_khz)
+		{
+			ret = sscanf(buf, "%u", &new_vdd);
+			if(ret != 1) {
+				mutex_unlock(&drv_state.lock);
+				return -EINVAL;
+			}
+
+			new_vdd = min(max((unsigned int)new_vdd, VDD_MIN_UV_MV), VDD_MAX_UV_MV);
+
+			acpu_freq_tbl[i].vdd_mv = new_vdd;
+			acpu_freq_tbl[i].vdd_raw = VDD_RAW(new_vdd);
+
+			/* Non-standard sysfs interface: advance buf */
+			ret = sscanf(buf, "%s", size_cur);
+			buf += (strlen(size_cur)+1);
+		}
+	}
+	mutex_unlock(&drv_state.lock);
+
+	return count;
 }
 #endif

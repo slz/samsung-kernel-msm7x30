@@ -625,6 +625,19 @@ static ssize_t show_scaling_setspeed(struct cpufreq_policy *policy, char *buf)
 }
 
 #ifdef CONFIG_CPU_FREQ_VDD_LEVELS
+extern ssize_t acpuclk_get_UV_mV_table_str(char *buf);
+static ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf)
+{
+	return acpuclk_get_UV_mV_table_str(buf);
+}
+
+extern ssize_t acpuclk_store_UV_mV_table(const char *buf, size_t count);
+static ssize_t store_UV_mV_table(struct cpufreq_policy *policy,
+ 					const char *buf, size_t size)
+{
+	return acpuclk_store_UV_mV_table(buf, size);
+}
+
 extern ssize_t acpuclk_get_vdd_levels_str(char *buf);
 static ssize_t show_vdd_levels(struct cpufreq_policy *policy, char *buf)
 {
@@ -721,6 +734,7 @@ cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
 #ifdef CONFIG_CPU_FREQ_VDD_LEVELS
 cpufreq_freq_attr_rw(vdd_levels);
+cpufreq_freq_attr_rw(UV_mV_table);
 #endif
 
 static struct attribute *default_attrs[] = {
@@ -738,6 +752,7 @@ static struct attribute *default_attrs[] = {
 	&scaling_setspeed.attr,
 #ifdef CONFIG_CPU_FREQ_VDD_LEVELS
 	&vdd_levels.attr,
+	&UV_mV_table.attr,
 #endif
 	NULL
 };
